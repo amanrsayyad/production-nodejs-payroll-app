@@ -25,6 +25,10 @@ app.use("/api/v1/auth", require("./routes/userRoutes.js"));
 //PORT
 const PORT = process.env.PORT || 8080;
 
+app.get("/", (req, res) => {
+  return res.status(200).send("<h1>Welcome To Node server </h1>");
+});
+
 //listen
 app.listen(PORT, () => {
   console.log(`Server Runnning ${PORT}`.bgGreen.white);
