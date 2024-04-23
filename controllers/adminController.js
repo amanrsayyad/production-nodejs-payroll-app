@@ -1,6 +1,6 @@
 const JWT = require("jsonwebtoken");
 const { hashPassword, comparePassword } = require("../helpers/authHelper");
-const userModal = require("../models/userModal");
+const adminModel = require("../models/adminModal");
 var { expressjwt: jwt } = require("express-jwt");
 
 //middleware
@@ -9,25 +9,10 @@ const requireSingIn = jwt({
   algorithms: ["HS256"],
 });
 
-// get register users
-const getAllUsers = async (req, res) => {
-  try {
-    const users = await userModal.find({});
-    res.status(200).json(users);
-  } catch (error) {
-    console.log(error);
-    return res.status(500).send({
-      success: false,
-      message: "Error in Users GET API",
-      error,
-    });
-  }
-};
-
 //register
 const registerController = async (req, res) => {
   try {
-    const { name, email, password, monthlySalary, category } = req.body;
+    const { name, email, password } = req.body;
     //validation
     if (!name) {
       return res.status(400).send({
@@ -47,20 +32,8 @@ const registerController = async (req, res) => {
         message: "password is required and 6 character long",
       });
     }
-    if (!monthlySalary) {
-      return res.status(400).send({
-        success: false,
-        message: "Monthly Salary is required",
-      });
-    }
-    if (!category) {
-      return res.status(400).send({
-        success: false,
-        message: "Category is required",
-      });
-    }
     //exisiting user
-    const exisitingUser = await userModal.findOne({ email });
+    const exisitingUser = await adminModel.findOne({ email });
     if (exisitingUser) {
       return res.status(500).send({
         success: false,
@@ -71,12 +44,10 @@ const registerController = async (req, res) => {
     const hashedPassword = await hashPassword(password);
 
     //save user
-    const user = await userModal({
+    const user = await adminModel({
       name,
       email,
       password: hashedPassword,
-      monthlySalary,
-      category,
     }).save();
 
     return res.status(201).send({
@@ -106,7 +77,7 @@ const loginController = async (req, res) => {
       });
     }
     // find user
-    const user = await userModal.findOne({ email });
+    const user = await adminModel.findOne({ email });
     if (!user) {
       return res.status(500).send({
         success: false,
@@ -149,7 +120,7 @@ const updateUserController = async (req, res) => {
   try {
     const { name, password, email } = req.body;
     //user find
-    const user = await userModal.findOne({ email });
+    const user = await adminModel.findOne({ email });
     //password validate
     if (password && password.length < 6) {
       return res.status(400).send({
@@ -159,7 +130,7 @@ const updateUserController = async (req, res) => {
     }
     const hashedPassword = password ? await hashPassword(password) : undefined;
     //updated useer
-    const updatedUser = await userModal.findOneAndUpdate(
+    const updatedUser = await adminModel.findOneAndUpdate(
       { email },
       {
         name: name || user.name,
@@ -188,5 +159,4 @@ module.exports = {
   registerController,
   loginController,
   updateUserController,
-  getAllUsers,
 };
