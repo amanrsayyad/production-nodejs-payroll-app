@@ -6,21 +6,13 @@ const attendenceSchema = new mongoose.Schema(
       type: String,
       required: [true, "please add User Id"],
     },
-    latitude: {
+    pickUp: {
       type: String,
-      required: [true, "please add latitude"],
+      required: [true, "please add pick up"],
     },
-    longitude: {
+    dropOff: {
       type: String,
-      required: [true, "please add longitude"],
-    },
-    city: {
-      type: String,
-      required: [true, "please add city"],
-    },
-    time: {
-      type: String,
-      required: [true, "please add time"],
+      required: [true, "please add drop off"],
     },
     date: {
       type: String,

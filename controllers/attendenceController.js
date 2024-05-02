@@ -14,7 +14,7 @@ const attendenceData = async (req, res) => {
   }
 };
 
-const checkIn = async (req, res) => {
+const pressAttendence = async (req, res) => {
   try {
     const { userId, latitude, longitude, city, time, date, employeeName } =
       req.body;
@@ -89,4 +89,4 @@ const checkIn = async (req, res) => {
   }
 };
 
-module.exports = { checkIn, attendenceData };
+module.exports = { pressAttendence, attendenceData };

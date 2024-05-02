@@ -1,6 +1,6 @@
 const express = require("express");
 const {
-  checkIn,
+  pressAttendence,
   attendenceData,
 } = require("../controllers/attendenceController");
 
@@ -9,7 +9,7 @@ const router = express.Router();
 
 //routes
 // ATTENDENCE || POST
-router.post("/add-attendence", checkIn);
+router.post("/add-attendence", pressAttendence);
 
 // ATTENDENCE || GET
 router.get("/get-attendence", attendenceData);
