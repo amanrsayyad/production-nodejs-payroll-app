@@ -14,6 +14,10 @@ const attendenceSchema = new mongoose.Schema(
       type: String,
       required: [true, "please add drop off"],
     },
+    ridePay: {
+      type: String,
+      required: [true, "please add ride pay"],
+    },
     date: {
       type: String,
       required: [true, "please add date"],

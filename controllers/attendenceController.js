@@ -16,8 +16,7 @@ const attendenceData = async (req, res) => {
 
 const pressAttendence = async (req, res) => {
   try {
-    const { userId, latitude, longitude, city, time, date, employeeName } =
-      req.body;
+    const { userId, pickUp, dropOff, ridePay, date, employeeName } = req.body;
 
     // validation
     if (!userId) {
@@ -26,28 +25,22 @@ const pressAttendence = async (req, res) => {
         message: "User ID is required",
       });
     }
-    if (!latitude) {
+    if (!pickUp) {
       return res.status(400).send({
         success: false,
         message: "Latitude is required",
       });
     }
-    if (!longitude) {
+    if (!dropOff) {
       return res.status(400).send({
         success: false,
         message: "Longitude is required",
       });
     }
-    if (!city) {
+    if (!ridePay) {
       return res.status(400).send({
         success: false,
         message: "City is required",
-      });
-    }
-    if (!time) {
-      return res.status(400).send({
-        success: false,
-        message: "Time is required",
       });
     }
     if (!date) {
@@ -66,10 +59,9 @@ const pressAttendence = async (req, res) => {
     // category
     const attendence = await AttendenceModal({
       userId,
-      latitude,
-      longitude,
-      city,
-      time,
+      pickUp,
+      dropOff,
+      ridePay,
       date,
       employeeName,
     }).save();
@@ -79,6 +71,7 @@ const pressAttendence = async (req, res) => {
       message: "Attendence Created",
       attendence,
     });
+    
   } catch (error) {
     console.log(error);
     return res.status(500).send({
