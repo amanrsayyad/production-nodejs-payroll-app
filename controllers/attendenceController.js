@@ -28,13 +28,13 @@ const pressAttendence = async (req, res) => {
     if (!pickUp) {
       return res.status(400).send({
         success: false,
-        message: "Latitude is required",
+        message: "Pick Up is required",
       });
     }
     if (!dropOff) {
       return res.status(400).send({
         success: false,
-        message: "Longitude is required",
+        message: "Drop Off Location is required",
       });
     }
     if (!ridePay) {
@@ -71,7 +71,6 @@ const pressAttendence = async (req, res) => {
       message: "Attendence Created",
       attendence,
     });
-    
   } catch (error) {
     console.log(error);
     return res.status(500).send({
