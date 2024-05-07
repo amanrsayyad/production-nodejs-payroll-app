@@ -24,6 +24,7 @@ app.use("/api/v1/auth", require("./routes/adminRoutes.js"));
 app.use("/api/v1/user", require("./routes/userRoutes.js"));
 app.use("/api/v1/category", require("./routes/categoryRoute.js"));
 app.use("/api/v1/attendence", require("./routes/attendenceRoute.js"));
+app.use("/api/v1/recipient", require("./routes/recipientRoutes.js"));
 
 //PORT
 const PORT = process.env.PORT || 8080;
