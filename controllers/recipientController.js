@@ -16,8 +16,14 @@ const getAllRecipient = async (req, res) => {
 
 const addRecipient = async (req, res) => {
   try {
-    const { recipient_address } = req.body;
-    // validation
+    const { userId, recipient_address } = req.body;
+    //  validation
+    if (!userId) {
+      return res.status(400).send({
+        success: false,
+        message: "User ID is required",
+      });
+    }
     if (!recipient_address) {
       return res.status(400).send({
         success: false,
@@ -27,6 +33,7 @@ const addRecipient = async (req, res) => {
 
     // category
     const recipient = await recipientModal({
+      userId,
       recipient_address,
     }).save();
 
